@@ -2,6 +2,7 @@
 
 #include "whiteboard-window.h"
 #include "cc-drawing-area.h"
+#include "savepng.h"
 
 typedef struct _WhiteboardAppWindow WhiteboardAppWindow;
 
@@ -26,8 +27,8 @@ on_save ( GtkWidget *widget,
           WhiteboardAppWindowPrivate * priv)
 {
     CcDrawingArea *area = (CcDrawingArea*) priv->drawingarea;
-    cairo_surface_write_to_png( area->surface,
-                                gtk_entry_get_text (GTK_ENTRY (priv->fname)));
+    save_png( area->surface,
+              (char*)gtk_entry_get_text (GTK_ENTRY (priv->fname)));
 }
 
 static void
