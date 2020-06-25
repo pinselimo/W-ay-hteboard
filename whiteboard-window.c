@@ -14,7 +14,7 @@ typedef struct _WhiteboardAppWindowPrivate WhiteboardAppWindowPrivate;
 
 struct _WhiteboardAppWindowPrivate
 {
-    GtkWidget *stack;
+    GtkWidget *drawbox;
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE(WhiteboardAppWindow, whiteboard_app_window, GTK_TYPE_APPLICATION_WINDOW);
@@ -22,15 +22,15 @@ G_DEFINE_TYPE_WITH_PRIVATE(WhiteboardAppWindow, whiteboard_app_window, GTK_TYPE_
 static void
 whiteboard_app_window_init (WhiteboardAppWindow *win)
 {
-//    gtk_widget_init_template (GTK_WIDGET (win));
-//    WhiteboardAppWindowPrivate *priv;
+    gtk_widget_init_template (GTK_WIDGET (win));
+    WhiteboardAppWindowPrivate *priv;
     GtkWidget *drawing_area;
 
     // gchar *name = "TEST";
-    // priv = whiteboard_app_window_get_instance_private (win);
+    priv = whiteboard_app_window_get_instance_private (win);
     drawing_area = cc_drawing_area_new ();
+    gtk_box_pack_start ((GtkBox*)priv->drawbox, drawing_area, TRUE, TRUE, 0);
 
-    gtk_container_add( GTK_CONTAINER (win), drawing_area);
     // gtk_stack_add_titled( GTK_STACK (priv->stack), drawing_area, name, name);
 
 }
@@ -38,9 +38,9 @@ whiteboard_app_window_init (WhiteboardAppWindow *win)
 static void
 whiteboard_app_window_class_init (WhiteboardAppWindowClass *class)
 {
-//    gtk_widget_class_set_template_from_resource (GTK_WIDGET_CLASS (class),
-//                                                 "/space/behaviour/whiteboard/window.ui");
-//    gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), WhiteboardAppWindow, stack);
+    gtk_widget_class_set_template_from_resource (GTK_WIDGET_CLASS (class),
+                                                 "/space/behaviour/whiteboard/window.ui");
+    gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), WhiteboardAppWindow, drawbox);
 }
 
 WhiteboardAppWindow *
