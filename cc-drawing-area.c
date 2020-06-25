@@ -124,7 +124,6 @@ cc_drawing_area_event (GtkWidget *widget,
 	GdkInputSource source;
 	GdkDeviceTool *tool;
 	GdkDevice *device;
-    g_debug("THERE");
 	device = gdk_event_get_source_device (event);
 
 	if (!device)
@@ -168,8 +167,7 @@ cc_drawing_area_event (GtkWidget *widget,
 		cairo_move_to (area->cr, x, y);
 
 		gtk_widget_queue_draw (widget);
-        g_debug("HRE");
-        return GDK_EVENT_PROPAGATE;//GDK_EVENT_STOP;
+        return GDK_EVENT_STOP;
 	}
 
 	return GDK_EVENT_PROPAGATE;
@@ -195,7 +193,6 @@ cc_drawing_area_init (CcDrawingArea *area)
 			       GDK_BUTTON_PRESS_MASK |
 			       GDK_BUTTON_RELEASE_MASK |
 			       GDK_POINTER_MOTION_MASK);
-    g_debug("Initialized");
 }
 
 GtkWidget *
