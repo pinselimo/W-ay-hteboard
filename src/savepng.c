@@ -2,6 +2,8 @@
 #include <cairo/cairo.h>
 #include <gtk/gtk.h>
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 #include "cc-drawing-area.h"
 
@@ -26,8 +28,40 @@ bitmap_t;
         return -1;                                       \
     }
 
+char*
+format_filename (char *fname)
+{
+#ifdef __linux__
+    if(strchr(fname, '/') != NULL)
+#elif WIN32
+    if(strchr(fname, '\\'))
+#endif
+    {
+        return fname;
+    }
+    else
+    {
+#ifdef __linux__
+        char *homedir = getenv("HOME");
+        char *imgdir = "/Pictures/whiteboard/";
+        char *dir = malloc( strlen(homedir) + strlen(imgdir) + 1);
+        strcpy( dir, homedir);
+        strcat( dir, imgdir);
+#elif WIN32
+        char *dir = "\%USERPROFILE\%\\Pictures\\whiteboard\\";
+#endif
+        char *fn = malloc(strlen(dir) + strlen(fname) + 1);
+        strcpy( fn, dir);
+        strcat( fn, fname);
+#ifdef __linux__
+        free( dir);
+#endif
+        return fn;
+    }
+}
+
 int
-png_to_file (const bitmap_t *bitmap, const char *path)
+png_to_file (const bitmap_t *bitmap, char *path)
 {
     FILE *fp;
     png_structp png_ptr;
@@ -35,8 +69,9 @@ png_to_file (const bitmap_t *bitmap, const char *path)
     size_t y;
     png_byte **row_pointers;
     int depth = 8;
-
-    fp = fopen (path, "wb");
+    char * full_path = format_filename (path);
+    fp = fopen ( full_path, "wb");
+    free (full_path);
     FAIL (!fp);
     png_ptr = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     FAIL (!png_ptr);
@@ -76,8 +111,9 @@ png_to_file (const bitmap_t *bitmap, const char *path)
     return 0;
 }
 
+
 void
-save_png (cairo_surface_t *surface, const char *fname)
+save_png (cairo_surface_t *surface, char *fname)
 {
     bitmap_t bitmap;
     int rv;
