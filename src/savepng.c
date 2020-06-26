@@ -31,6 +31,15 @@ bitmap_t;
 char*
 format_filename (char *fname)
 {
+    const char* PNG = ".png";
+    char *fext = strrchr(fname,'.');
+    char *fnamenew = malloc (strlen(fname)+4+1);
+    if (fext != PNG)
+    {
+        strcpy(fnamenew, fname);
+        strcat(fnamenew, PNG);
+        fname = fnamenew;
+    }
 #ifdef __linux__
     if(strchr(fname, '/') != NULL)
 #elif WIN32
@@ -50,12 +59,13 @@ format_filename (char *fname)
 #elif WIN32
         char *dir = "\%USERPROFILE\%\\Pictures\\whiteboard\\";
 #endif
-        char *fn = malloc(strlen(dir) + strlen(fname) + 1);
-        strcpy( fn, dir);
-        strcat( fn, fname);
+        char *fn = malloc (strlen(dir) + strlen(fname) + 1);
+        strcpy (fn, dir);
+        strcat (fn, fname);
 #ifdef __linux__
-        free( dir);
+        free (dir);
 #endif
+        free (fnamenew);
         return fn;
     }
 }
