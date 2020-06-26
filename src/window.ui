@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="WhiteboardAppWindow" parent="GtkApplicationWindow">
+        <property name="title">Whiteboard</property>
+        <property name="default-width">1000</property>
+        <property name="default-height">500</property>
+        <child>
+            <object id="boxcontent" class="GtkBox">
+                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
+                <property name="can_focus">False</property>
+                <child>
+                <object class="GtkHeaderBar" id="header">
+                    <property name="visible">True</property>
+                    <property name="show-close-button">True</property>
+                    <child>
+                        <object id="btnsave" class="GtkButton">
+                            <property name="visible">True</property>
+                            <property name="label">Save</property>
+                        </object>
+                    </child>
+                    <child type="title">
+                        <object id="fname" class="GtkEntry">
+                            <property name="visible">True</property>
+                            <property name="input-purpose">GTK_INPUT_PURPOSE_URL</property>
+                            <property name="placeholder-text">Whiteboard</property>
+                            <property name="xalign">0.5</property>
+                            <property name="hexpand">True</property>
+                        </object>
+                    </child>
+                </object>
+                </child>
+                <child>
+                    <object id="drawingarea" class="CcDrawingArea">
+                        <property name="visible">True</property>
+                        <property name="expand">True</property>
+                    </object>
+                </child>
+                <!--child>
+                    <object class="GtkStack" id="stack">
+                        <property name="visible">True</property>
+                    </object>
+                </child-->
+            </object>
+        </child>
+    </template>
+</interface>

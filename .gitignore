@@ -1,1 +1,5 @@
 whiteboard
+resources.c
+*.png
+build/*
+*.sh

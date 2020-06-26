@@ -28,5 +28,14 @@ G_DECLARE_FINAL_TYPE (CcDrawingArea, cc_drawing_area, CC, DRAWING_AREA, GtkEvent
 
 GtkWidget *cc_drawing_area_new (void);
 
+typedef struct _CcDrawingArea CcDrawingArea;
+
+struct _CcDrawingArea {
+    GtkEventBox parent;
+    GdkDevice *current_device;
+    cairo_surface_t *surface;
+    cairo_t *cr;
+};
+
 G_END_DECLS
 
