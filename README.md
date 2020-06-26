@@ -1,4 +1,4 @@
-# W(ay)ghtboard
+# W(ay)hteboard
 
 Lacking a simple whiteboard app for stylus input supporting HiDPI on Wayland/Sway, I created my own.
 All the code for the drawing capabilities is actually taken from the ![GNOME Control Center](https://gitlab.gnome.org/GNOME/gnome-control-center)'s wacom testing pane. My code only wraps it in a window and adds the capability to save the drawn masterpiece to ```.png```.
