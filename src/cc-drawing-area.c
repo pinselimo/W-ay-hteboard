@@ -153,10 +153,10 @@ cc_drawing_area_event (GtkWidget *widget,
 		gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &pressure);
 
 		if (gdk_device_tool_get_tool_type (tool) == GDK_DEVICE_TOOL_TYPE_ERASER) {
-			cairo_set_line_width (area->cr, 10 * pressure);
+			cairo_set_line_width (area->cr, 50 * pressure);
 			cairo_set_operator (area->cr, CAIRO_OPERATOR_DEST_OUT);
 		} else {
-			cairo_set_line_width (area->cr, 4 * pressure);
+			cairo_set_line_width (area->cr, 5 * pressure);
 			cairo_set_operator (area->cr, CAIRO_OPERATOR_SATURATE);
 		}
 
