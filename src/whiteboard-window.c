@@ -43,7 +43,8 @@ on_keypress ( GtkWidget *widget,
         case GDK_KEY_L:
         case GDK_KEY_l:
             // Move focus to filename
-            gtk_widget_grab_focus (priv->fname);
+            if (event->state & GDK_CONTROL_MASK)
+                gtk_widget_grab_focus (priv->fname);
             break;
         case GDK_KEY_S:
         case GDK_KEY_s:
