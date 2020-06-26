@@ -49,8 +49,8 @@ on_keypress ( GtkWidget *widget,
         case GDK_KEY_s:
             if (event->state & GDK_CONTROL_MASK)
             {
-            //        on_save(widget, priv);
-                g_debug("Saving file..");
+                on_save(widget, priv);
+                gtk_widget_grab_focus (priv->btnsave);
                 return TRUE;
             }
             break;
