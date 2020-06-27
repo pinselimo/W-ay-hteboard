@@ -138,6 +138,20 @@ cc_drawing_area_event (GtkWidget *widget,
 
         gdk_event_get_coords (event, &x, &y);
         // TODO: Translate, scale and rotate
+
+        if (event->type == GDK_TOUCH_BEGIN)
+        {
+            area->touch_x_pos = x;
+            area->touch_y_pos = y;
+
+            g_debug("%.2f , %.2f", x, y);
+        }
+        else if (event->type == GDK_TOUCH_END)
+        {
+            double x_tran = x - area->touch_x_pos;
+            double y_tran = y - area->touch_y_pos;
+//            cairo_transform(area->cr, x_tran, y_tran);
+        }
         return GDK_EVENT_STOP;
     }
 
@@ -160,6 +174,8 @@ cc_drawing_area_event (GtkWidget *widget,
 
         gdk_event_get_coords (event, &x, &y);
         gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &pressure);
+
+        cairo_user_to_device (area->cr, &x, &y);
 
         if (gdk_device_tool_get_tool_type (tool) == GDK_DEVICE_TOOL_TYPE_ERASER) {
             cairo_set_line_width (area->cr, 50 * pressure);
@@ -204,7 +220,8 @@ cc_drawing_area_init (CcDrawingArea *area)
     gtk_widget_add_events (GTK_WIDGET (area),
                    GDK_BUTTON_PRESS_MASK |
                    GDK_BUTTON_RELEASE_MASK |
-                   GDK_POINTER_MOTION_MASK);
+                   GDK_POINTER_MOTION_MASK |
+                   GDK_TOUCH_MASK);
 }
 
 GtkWidget *

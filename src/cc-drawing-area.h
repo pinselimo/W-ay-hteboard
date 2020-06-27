@@ -35,6 +35,8 @@ struct _CcDrawingArea {
     GdkDevice *current_device;
     cairo_surface_t *surface;
     cairo_t *cr;
+    double touch_x_pos;
+    double touch_y_pos;
 };
 
 G_END_DECLS
