@@ -132,6 +132,15 @@ cc_drawing_area_event (GtkWidget *widget,
     source = gdk_device_get_source (device);
     tool = gdk_event_get_device_tool (event);
 
+    if (source == GDK_SOURCE_TOUCHSCREEN)
+    {
+        gdouble x, y;
+
+        gdk_event_get_coords (event, &x, &y);
+        // TODO: Translate, scale and rotate
+        return GDK_EVENT_STOP;
+    }
+
     if (source != GDK_SOURCE_PEN && source != GDK_SOURCE_ERASER)
         return GDK_EVENT_PROPAGATE;
 
@@ -157,11 +166,14 @@ cc_drawing_area_event (GtkWidget *widget,
             cairo_set_operator (area->cr, CAIRO_OPERATOR_DEST_OUT);
         } else {
             cairo_set_line_width (area->cr, 5 * pressure);
-            cairo_set_operator (area->cr, CAIRO_OPERATOR_SATURATE);
+            cairo_set_line_cap (area->cr, CAIRO_LINE_CAP_ROUND);
+            cairo_set_line_join (area->cr, CAIRO_LINE_JOIN_ROUND);
+            cairo_set_operator (area->cr, CAIRO_OPERATOR_DARKEN);
         }
-
-        cairo_set_source_rgba (area->cr, 0, 0, 0, pressure);
+        double col = (1.0-pressure)*0.9;
+        cairo_set_source_rgb (area->cr, col, col, col);
         cairo_line_to (area->cr, x, y);
+
         cairo_stroke (area->cr);
 
         cairo_move_to (area->cr, x, y);
