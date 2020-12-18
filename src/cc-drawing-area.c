@@ -181,7 +181,7 @@ cc_drawing_area_event (GtkWidget *widget,
             cairo_set_line_width (area->cr, 50 * pressure);
             cairo_set_operator (area->cr, CAIRO_OPERATOR_DEST_OUT);
         } else {
-            cairo_set_line_width (area->cr, 5 * pressure);
+            cairo_set_line_width (area->cr, 10 * pressure);
             cairo_set_line_cap (area->cr, CAIRO_LINE_CAP_ROUND);
             cairo_set_line_join (area->cr, CAIRO_LINE_JOIN_ROUND);
             cairo_set_operator (area->cr, CAIRO_OPERATOR_DARKEN);
